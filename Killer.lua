@@ -5,7 +5,7 @@ local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shl
 
 local Window = Fluent:CreateWindow({
     Title = " Hutao Hub | Blox Fruit",
-    SubTitle = "Version 2",
+    SubTitle = "Version 3 Beta",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
     Acrylic = false,
