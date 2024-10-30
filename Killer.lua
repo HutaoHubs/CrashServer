@@ -1,11 +1,11 @@
-SaveManager:LoadAutoloadConfig()local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/main/source")))()
 
 local Window = Fluent:CreateWindow({
     Title = " Hutao Hub | Blox Fruit",
-    SubTitle = "Version 3 Beta",
+    SubTitle = "Version 2",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
     Acrylic = false,
@@ -20,6 +20,7 @@ local Tabs = {
     Teleport = Window:AddTab({ Title = "Teleport", Icon = "palmtree" }),
     Fruit = Window:AddTab({ Title = "Fruit", Icon = "cherry" }),
     Raid = Window:AddTab({ Title = "Raid", Icon = "swords" }),
+    Seas = Window:AddTab({ Title = "Sea Event", Icon = "waves" }),
     Race = Window:AddTab({ Title = "Race V4", Icon = "chevrons-right" }),
     Shop = Window:AddTab({ Title = "Shop", Icon = "shopping-cart" }),
 	Misc = Window:AddTab({ Title = "Misc", Icon = "list-plus" }),
@@ -2659,7 +2660,7 @@ Tabs.Main:AddButton({
         end
         })
 local Farming = Tabs.Main:AddSection("Farming")
-local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack'}
+local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack','Hutao Killer Attack}
 
     local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
         Title = "Select Fast Attack",
@@ -2668,7 +2669,7 @@ local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack'}
         Multi = false,
         Default = 1,
     })
-    DropdownDelayAttack:SetValue("Super Fast Attack")
+    DropdownDelayAttack:SetValue("Hutao Killer Attack")
     DropdownDelayAttack:OnChanged(function(Value)
     _G.FastAttackFaiFao_Mode = Value
 	if _G.FastAttackFaiFao_Mode == "Fast Attack" then
@@ -2676,9 +2677,9 @@ local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 	elseif _G.FastAttackFaiFao_Mode == "Normal Attack" then
 		_G.Fast_Delay = 2
 	elseif _G.FastAttackFaiFao_Mode == "Super Fast Attack" then
-		_G.Fast_Delay = 0.0000000000000001
+		_G.Fast_Delay = 0.0000000000001
 	elseif _G.FastAttackFaiFao_Mode == "Hutao Killer Attack" then
-		_G.Fast_Delay = 0.000000000000000000000001
+		_G.Fast_Delay = 0.00000000000000000001
 	end
 end)
 
@@ -3712,10 +3713,10 @@ local boss = Tabs.Main:AddSection("Boss Farm")
       end)
 
       if Third_Sea then
-      local RoughSea = Tabs.Main:AddSection("Kitsune")
+      local RoughSea = Tabs.Seas:AddSection("Kitsune")
 
 
-      local ToggleEspKitsune = Tabs.Main:AddToggle("ToggleEspKitsune", {Title = "Esp Kitsune Island",Description = "", Default = false })
+      local ToggleEspKitsune = Tabs.Seas:AddToggle("ToggleEspKitsune", {Title = "Esp Kitsune Island",Description = "", Default = false })
       ToggleEspKitsune:OnChanged(function(Value)
         KitsuneIslandEsp = Value
         while KitsuneIslandEsp do wait()
@@ -3758,7 +3759,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
         end
     end
 
-      local ToggleTPKitsune = Tabs.Main:AddToggle("ToggleTPKitsune", {Title = "Tween To Kitsune Island",Description = "", Default = false })
+      local ToggleTPKitsune = Tabs.Seas:AddToggle("ToggleTPKitsune", {Title = "Tween To Kitsune Island",Description = "", Default = false })
       ToggleTPKitsune:OnChanged(function(Value)
         _G.TweenToKitsune = Value
       end)
@@ -3784,7 +3785,7 @@ local boss = Tabs.Main:AddSection("Boss Farm")
     end)
 
 
-      local ToggleCollectAzure = Tabs.Main:AddToggle("ToggleCollectAzure", {Title = "Collect Azure Ambers",Description = "", Default = false })
+      local ToggleCollectAzure = Tabs.Seas:AddToggle("ToggleCollectAzure", {Title = "Collect Azure Ambers",Description = "", Default = false })
       ToggleCollectAzure:OnChanged(function(Value)
          _G.CollectAzure = Value
       end)
@@ -3804,9 +3805,18 @@ end)
 end
 
 if Third_Sea then
-    local RoughSea = Tabs.Main:AddSection("Rough Sea")
+    Tabs.Seas:AddButton({
+	Title = "Trade Azure Ambers",
+	Description = "",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Modules.Net:FindFirstChild("RF/KitsuneStatuePray"):InvokeServer()
+	end
+})
 
-    local ToggleSailBoat = Tabs.Main:AddToggle("ToggleSailBoat", {Title = "Auto buy Boat",Description = "", Default = false })
+if Third_Sea then
+    local RoughSea = Tabs.Seas:AddSection("Sea Event")
+
+    local ToggleSailBoat = Tabs.Seas:AddToggle("ToggleSailBoat", {Title = "Auto buy Boat",Description = "", Default = false })
     ToggleSailBoat:OnChanged(function(Value)
         _G.SailBoat = Value
     end)
@@ -3868,7 +3878,7 @@ if Third_Sea then
 
 	
 
-    local ToggleTerrorshark = Tabs.Main:AddToggle("ToggleTerrorshark", {Title = " Kill Terrorshark",Description = "", Default = false })
+    local ToggleTerrorshark = Tabs.Seas:AddToggle("ToggleTerrorshark", {Title = " Kill Terrorshark",Description = "", Default = false })
 
     ToggleTerrorshark:OnChanged(function(Value)
         _G.AutoTerrorshark = Value
@@ -3909,7 +3919,7 @@ if Third_Sea then
 
 
 
-     local TogglePiranha = Tabs.Main:AddToggle("TogglePiranha", {Title = " Kill Piranha",Description = "", Default = false })
+     local TogglePiranha = Tabs.Seas:AddToggle("TogglePiranha", {Title = " Kill Piranha",Description = "", Default = false })
 
      TogglePiranha:OnChanged(function(Value)
         _G.farmpiranya = Value
@@ -3951,7 +3961,7 @@ if Third_Sea then
 
 
 
-     local ToggleShark = Tabs.Main:AddToggle("ToggleShark", {Title = " Kill Shark",Description = "", Default = false })
+     local ToggleShark = Tabs.Seas:AddToggle("ToggleShark", {Title = " Kill Shark",Description = "", Default = false })
      ToggleShark:OnChanged(function(Value)
         _G.AutoShark = Value
      end)
@@ -3992,7 +4002,7 @@ if Third_Sea then
 
 
 
-    local ToggleFishCrew = Tabs.Main:AddToggle("ToggleFishCrew", {Title = " Kill Fish Crew",Description = "", Default = false })
+    local ToggleFishCrew = Tabs.Seas:AddToggle("ToggleFishCrew", {Title = " Kill Fish Crew",Description = "", Default = false })
     ToggleFishCrew:OnChanged(function(Value)
        _G.AutoFishCrew = Value
     end)
@@ -4038,7 +4048,7 @@ if Third_Sea then
 
 
 
-    local ToggleShip = Tabs.Main:AddToggle("ToggleShip", {Title = "Kill Ship",Description = "", Default = false })
+    local ToggleShip = Tabs.Seas:AddToggle("ToggleShip", {Title = "Kill Ship",Description = "", Default = false })
     ToggleShip:OnChanged(function(Value)
         _G.Ship = Value
        end)
@@ -4078,7 +4088,7 @@ end)
 
 
 
-    local ToggleGhostShip = Tabs.Main:AddToggle("ToggleGhostShip", {Title = "Kill Ghost Ship",Description = "",Default = false })
+    local ToggleGhostShip = Tabs.Seas:AddToggle("ToggleGhostShip", {Title = "Kill Ghost Ship",Description = "",Default = false })
     ToggleGhostShip:OnChanged(function(Value)
         _G.GhostShip = Value
        end)
@@ -4255,10 +4265,10 @@ spawn(function()
 
 
 if Third_Sea then
-    local Sea = Tabs.Main:AddSection("Sea Beast")
+    local Sea = Tabs.Seas:AddSection("Sea Beast")
 
 
-local ToggleSeaBeAst = Tabs.Main:AddToggle("ToggleSeaBeAst", {Title = "Auto Sea Beast",Description = "", Default = false })
+local ToggleSeaBeAst = Tabs.Seas:AddToggle("ToggleSeaBeAst", {Title = "Auto Sea Beast",Description = "", Default = false })
 
 ToggleSeaBeAst:OnChanged(function(Value)
     _G.AutoSeaBeast = Value
@@ -4373,7 +4383,7 @@ ToggleSeaBeAst:OnChanged(function(Value)
         end
     end)
 
-local ToggleAutoW = Tabs.Main:AddToggle("ToggleAutoW", {Title = "Auto W",Description = "", Default = false })
+local ToggleAutoW = Tabs.Seas:AddToggle("ToggleAutoW", {Title = "Auto W",Description = "", Default = false })
 ToggleAutoW:OnChanged(function(Value)
     _G.AutoW = Value
     end)
@@ -4391,10 +4401,10 @@ ToggleAutoW:OnChanged(function(Value)
 
 
 
-    local AutoMysticIsland = Tabs.Main:AddSection("Mirage Island")
+    local AutoMysticIsland = Tabs.Seas:AddSection("Mirage Island")
 
 
-    Tabs.Main:AddButton({
+    Tabs.Seas:AddButton({
         Title = "Tween to Mirage Island",
         Description = "",
         Callback = function()
@@ -4419,7 +4429,7 @@ ToggleAutoW:OnChanged(function(Value)
     end
 
 
-    Tabs.Main:AddButton({
+    Tabs.Seas:AddButton({
         Title = "Tween to Highest Point",
         Description = "",
         Callback = function()
@@ -4446,7 +4456,7 @@ ToggleAutoW:OnChanged(function(Value)
         end
     end
 
-local ToggleTweenGear = Tabs.Main:AddToggle("ToggleTweenGear", {Title = "Tween To Gear",Description = "", Default = false })
+local ToggleTweenGear = Tabs.Seas:AddToggle("ToggleTweenGear", {Title = "Tween To Gear",Description = "", Default = false })
 ToggleTweenGear:OnChanged(function(Value)
     _G.TweenToGear = Value
 end) 
@@ -4473,7 +4483,7 @@ spawn(function()
 
 
 
-    local Togglelockmoon = Tabs.Main:AddToggle("Togglelockmoon", {Title = "Lock Moon and Use Race Skill",Description = "", Default = false })
+    local Togglelockmoon = Tabs.Seas:AddToggle("Togglelockmoon", {Title = "Lock Moon and Use Race Skill",Description = "", Default = false })
     Togglelockmoon:OnChanged(function(Value)
         _G.AutoLockMoon = Value
     end) 
@@ -4505,14 +4515,14 @@ spawn(function()
     end)
 
 
-local ToggleMirage = Tabs.Main:AddToggle("ToggleMirage", {Title = "Auto Mirage Island",Description = "", Default = false })
+local ToggleMirage = Tabs.Seas:AddToggle("ToggleMirage", {Title = "Auto Mirage Island",Description = "", Default = false })
 ToggleMirage:OnChanged(function(Value)
  _G.AutoSeaBeast = Value
 end) 
 
  Options.ToggleMirage:SetValue(false)
 
- local AutoW = Tabs.Main:AddToggle("AutoW", {Title = "Auto Press W",Description = "", Default = false })
+ local AutoW = Tabs.Seas:AddToggle("AutoW", {Title = "Auto Press W",Description = "", Default = false })
  AutoW:OnChanged(function(Value)
     _G.AutoW = Value
      end)
@@ -4670,8 +4680,8 @@ if Third_Sea then
             end
         end
         
-        local ToggleCDK = Tabs.Main:AddToggle("ToggleCDK", {Title = "Auto Cursed Dual Katana",Description = "", Default = false })
-                   ToggleHoly:OnChanged(function(Value)
+     local ToggleCDK = Tabs.Main:AddToggle("ToggleCDK", {Title = "Auto Cursed Dual Katana",Description = "", Default = false })
+                   ToggleCDK:OnChanged(function(Value)
                     _G.AutoCdkQuest = Value
                    end)
                    Options.ToggleCDK:SetValue(false)
@@ -5756,7 +5766,6 @@ spawn(function()
 	end)
 end)
 
-
 local Circle = Drawing.new("Circle")
 Circle.Color =  Color3.fromRGB(0, 244, 0)
 Circle.Thickness = 1
@@ -6202,7 +6211,7 @@ Tabs.Teleport:AddButton({
                 toTarget(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
             elseif _G.SelectIsland == "Colossuim" then
                 toTarget( CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
-            elseif _G.SelectIsland == "Zombie Island" then
+            elseif _G.SelectIsland == "Graveyard Island" then
                 toTarget(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094))
             elseif _G.SelectIsland == "Two Snow Mountain" then
                 toTarget(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
@@ -6900,51 +6909,6 @@ end)
 
 --RaceV4
 
-if Second_Sea then
-    local ToggleEvoRace = Tabs.Race:AddToggle("ToggleEvoRace", {Title = "Auto Race V2",Description = "",Default = false })
-    ToggleEvoRace:OnChanged(function(Value)
-        _G.AutoEvoRace = Value
-    end)
-        Options.ToggleEvoRace:SetValue(false)
- 
-    spawn(function()
-        while task.wait() do
-            pcall(function()
-                if _G.AutoEvoRace then
-                    local Back = game.Players.LocalPlayer.Backpack
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1")
-                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","2")
-                    if Back:FindFirstChild("Flower 2") then
-                        if Back:FindFirstChild("Flower 1") then
-                            Tween(CFrame.new(-5497.06152, 47.5923004, -795.237061))
-                            for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                                if v.Name == "Zombie" then
-                                    repeat task.wait()
-                                        EquipTool(SelectWeapon)
-                                        Tween(v.HumanoidRootPart.CFrame * CFrame.new(posX,posY,posZ))		
-                                    until Back:FindFirstChild("Flower 3")
-                                end
-                            end
-                        else
-                            Tween(game.Workspace["Flower1"].CFrame)
-                        end
-                    else
-                        Tween(game.Workspace["Flower2"].CFrame)
-                    end
-                    if Back:FindFirstChild("Flower 1") and Back:FindFirstChild("Flower 2") and Back:FindFirstChild("Flower 3") then
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1")
-                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","3")
-                    end
-                    for i,v in pairs(game.Workspace:GetChildren()) do
-                        if v.Name == "Flower1" or v.Name == "Flower2" then
-                            v.Size = Vector3.new(20,20,20)
-                        end
-                    end
-                end
-            end)
-        end
-    end)
-end
 
 Tabs.Race:AddButton({
     Title = "Timple Of Time",
@@ -7951,4 +7915,3 @@ InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
 
-SaveManager:LoadAutoloadConfig()
