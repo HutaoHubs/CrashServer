@@ -2660,7 +2660,7 @@ Tabs.Main:AddButton({
         end
         })
 local Farming = Tabs.Main:AddSection("Farming")
-local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack','Hutao Killer Attack}
+local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 
     local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
         Title = "Select Fast Attack",
@@ -2669,7 +2669,7 @@ local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack','Hutao Kil
         Multi = false,
         Default = 1,
     })
-    DropdownDelayAttack:SetValue("Hutao Killer Attack")
+    DropdownDelayAttack:SetValue("Super Fast Attack")
     DropdownDelayAttack:OnChanged(function(Value)
     _G.FastAttackFaiFao_Mode = Value
 	if _G.FastAttackFaiFao_Mode == "Fast Attack" then
@@ -2677,9 +2677,7 @@ local FastAttack = {'Normal Attack','Fast Attack','Super Fast Attack','Hutao Kil
 	elseif _G.FastAttackFaiFao_Mode == "Normal Attack" then
 		_G.Fast_Delay = 2
 	elseif _G.FastAttackFaiFao_Mode == "Super Fast Attack" then
-		_G.Fast_Delay = 0.000000000000001
-	elseif _G.FastAttackFaiFao_Mode == "Hutao Killer Attack" then
-		_G.Fast_Delay = 0.00000000000000000000001
+		_G.Fast_Delay = 0.000000005
 	end
 end)
 
